@@ -6,11 +6,11 @@ from glob import glob
 
 
 def python():
-    print 'Python'
+    print 'Files predominantly Python'
 
 
 def ruby():
-    print 'Ruby'
+    print 'Files predominantly Ruby'
 
 
 def _count_by_extension(path, extension):
