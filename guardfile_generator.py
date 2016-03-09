@@ -14,6 +14,3 @@ def ruby():
 def count_by_extension(path, extension):
     return len([y for __, __, x in os.walk(
         path) for y in x if y.endswith(extension)])
-
-
-
