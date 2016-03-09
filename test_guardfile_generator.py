@@ -2,7 +2,8 @@ import os
 import shutil
 import unittest
 
-from guardfile_generator import count_by_extension
+from mock import patch
+from guardfile_generator import count_by_extension, write_guardfile
 
 
 class HelperFunctions(object):
@@ -40,6 +41,32 @@ class EnvironmentDetectorTest(HelperFunctions, unittest.TestCase):
     def test_ruby_detection(self):
         self.generate_data('rb')
         self.assertEqual(count_by_extension('test_data', 'rb'), 5)
+
+
+class PythonHandlerTest(unittest.TestCase):
+    pass
+
+
+class RubyHandlerTest(unittest.TestCase):
+    pass
+
+
+# @patch('guardfile_generator.GUARDFILE')
+class WriteTest(unittest.TestCase):
+    def test_successful_write(self):
+        output = (
+            'guard :shell do\n',
+            'watch /.*.rb/ do\n',
+            '`rake test:integration`\n',
+            'end\n',
+            'end\n',
+        )
+        write_guardfile('rb', 'test string')
+        with open('Guardfile', 'r') as guard:
+            content = guard.readlines()
+
+        for o, c in zip(output, content):
+            self.assertEqual(c, o)
 
 if __name__ == '__main__':
     unittest.main()
