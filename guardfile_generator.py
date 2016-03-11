@@ -10,19 +10,20 @@ class Python(object):
     """
     Infer from pip what packages are present.
     """
+    string_list = {
+        'django': '`python manage.py test`',
+        'pytest': '`py.test --color=yes -s path/to/specific/test`',
+        'default': '`python setup.py test`'
+    }
+
     def get_guard_string(self):
-        string_list = {
-            'django': '`python manage.py test`',
-            'pytest': '`py.test --color=yes -s path/to/specific/test`',
-            'default': '`python setup.py test`'
-        }
         packages = self.run_pip_freeze()
         if 'django' in packages:
-            return string_list.get('django')
+            return self.string_list.get('django')
         elif 'pytest' in packages:
-            return string_list.get('pytest')
+            return self.string_list.get('pytest')
         else:
-            return string_list.get('default')
+            return self.string_list.get('default')
 
     def run_pip_freeze(self):
         try:
