@@ -12,11 +12,17 @@ class Python(object):
     """
     def get_guard_string(self):
         string_list = {
-            'django': '`python manage.py test`'
+            'django': '`python manage.py test`',
+            'pytest': '`py.test --color=yes -s path/to/specific/test`',
+            'default': '`python setup.py test`'
         }
         packages = self.run_pip_freeze()
         if 'django' in packages:
             return string_list.get('django')
+        elif 'pytest' in packages:
+            return string_list.get('pytest')
+        else:
+            return string_list.get('default')
 
     def run_pip_freeze(self):
         try:
@@ -24,7 +30,6 @@ class Python(object):
         except ImportError:
             pass
         else:
-            # i.version if you ever need to do version specific stuff:
             return {i.key for i in pip.get_installed_distributions()}
 
 
