@@ -17,7 +17,7 @@ guard :shell do
   end
 end
 }
-  File.write('Guardfile_dev', content)
+  File.write('Guardfile', content)
 end
 
 def get_test_string(extension)
@@ -40,7 +40,7 @@ def get_ruby_test_string
 end
 
 def get_python_test_string
-  puts 'Python'
+  return 'python setup.py test'
 end
 
 extension = get_file_count('rb') < get_file_count('py') ? 'py' : 'rb'
