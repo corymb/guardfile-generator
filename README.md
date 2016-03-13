@@ -1,8 +1,8 @@
 # Guardfilegenerator
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/guardfilegenerator`. To experiment with that code, run `bin/console` for an interactive prompt.
+Inspects Ruby environment to generate Guardfile based on installed testrunner. 
 
-TODO: Delete this and the text above, and describe your gem
+Also works for Python! Currently supports Django, Pytest and Unittest.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    generate_guardfile
 
 ## Development
 
