@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'guardfilegenerator'
+
+Guardfilegenerator::Generator.start( ARGV )
