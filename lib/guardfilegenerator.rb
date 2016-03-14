@@ -4,7 +4,6 @@ require "guardfilegenerator/version"
 require "guardfilegenerator/cli"
 
 module Guardfilegenerator
-
   def self.get_file_count(extension)
     files = []
     Find.find('.') do |path|
@@ -12,11 +11,9 @@ module Guardfilegenerator
     end
     return files.length
   end
-
   def self.get_test_string(extension)
     return extension == 'rb' ? get_ruby_test_string : get_python_test_string
   end
-
   def self.get_ruby_test_string
     if defined? 'minitest'
       return 'ruby test/*.rb'
@@ -31,20 +28,17 @@ module Guardfilegenerator
       |gem| [gem.name.downcase] }.group_by{ |gem| gem.name }
     raise "Couldn't find test runner in #{installed_gems.keys}"
   end
-
   def self.get_python_test_string
     return 'python setup.py test'
   end
-
   def self.write_guardfile(extension, test_string)
-  content = %{
-  guard :shell do
-    watch /.*.#{extension}/ do
-      `#{test_string}`
+    content = %{
+    guard :shell do
+      watch /.*.#{extension}/ do
+        `#{test_string}`
+      end
     end
-  end
-  }
+    }
     File.write('Guardfile', content)
   end
-
 end
