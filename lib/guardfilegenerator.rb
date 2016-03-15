@@ -29,6 +29,18 @@ module Guardfilegenerator
     raise "Couldn't find test runner in #{installed_gems.keys}"
   end
   def self.get_python_test_string
+    requirements = 'requirements.txt'
+    if File.file?(requirements)
+      dependencies = File.read(requirements).downcase.split(/\n+/)
+      case
+        when dependencies.index {|s| s.include?('django')}
+          return 'python manage.py test'
+        when dependencies.index {|s| s.include?('pytest')}
+          return 'py.test --color=yes -s test'
+        else
+          return 'python setup.py test'
+      end
+    end
     return 'python setup.py test'
   end
   def self.write_guardfile(extension, test_string)
