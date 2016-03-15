@@ -15,18 +15,18 @@ module Guardfilegenerator
     return extension == 'rb' ? get_ruby_test_string : get_python_test_string
   end
   def self.get_ruby_test_string
-    if defined? 'minitest'
-      return 'ruby test/*.rb'
+    case
+      when defined? 'minitest'
+        return 'ruby test/*.rb'
+      when defined? 'rspec'
+        return 'rspec spec'
+      when defined? 'rails'
+        return 'bundle exec rspec spec'
+      else
+        installed_gems =  Gem::Specification.sort_by{
+          |gem| [gem.name.downcase] }.group_by{ |gem| gem.name }
+        raise "Couldn't find test runner in #{installed_gems.keys}"
     end
-    if defined? 'rspec'
-      return 'rspec spec'
-    end
-    if defined? 'rails'
-      return 'bundle exec rspec spec'
-    end
-    installed_gems =  Gem::Specification.sort_by{
-      |gem| [gem.name.downcase] }.group_by{ |gem| gem.name }
-    raise "Couldn't find test runner in #{installed_gems.keys}"
   end
   def self.get_python_test_string
     requirements = 'requirements.txt'
